@@ -90,3 +90,5 @@ def delete(filter):
     cons = client.containers.list(filters={"name":filter})
 
     [con.kill() for con in cons]
+    client.containers.prune()
+    client.networks.prune()
