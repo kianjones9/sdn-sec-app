@@ -1,5 +1,8 @@
 auto eth0
-iface eth0 inet dhcp
+iface eth0 inet static
+address 134.117.92.219
+netmask 255.255.255.0
+gateway 134.117.92.1
 
 auto eth1
 iface eth1 inet static
@@ -17,4 +20,4 @@ auto eth3
 iface eth3 inet static
 address 10.43.1.133
 netmask 255.255.255.0
-up route add -net 10.43.1.30 netmask 255.255.255.255 dev eth3
+up route add -net 10.43.1.20 netmask 255.255.255.255 dev eth3

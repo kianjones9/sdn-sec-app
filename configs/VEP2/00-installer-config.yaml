@@ -1,0 +1,19 @@
+network:
+  ethernets:
+    eth0:
+      dhcp4: true         
+    eth1:
+      addresses:
+        - 10.43.1.121/24
+      routes:
+      - to: 10.43.1.10/32
+        via: 10.43.1.131
+      - to: 10.43.1.131/32
+        via: 10.43.1.121  
+    eth2:
+      addresses:
+        - 10.43.1.122/24
+      routes:
+      - to: 10.43.1.141/32
+        via: 10.43.1.122
+version: 2

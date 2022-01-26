@@ -1,0 +1,26 @@
+network:
+  ethernets:
+    enp2s0f0:
+      addresses: [134.117.92.171/24]
+      gateway4: 134.117.92.1
+      nameservers:
+          addresses: [134.117.1.11, 134.117.242.35]
+    enp2s0f1:
+      addresses:
+        - 10.43.1.131/24
+      routes:
+      - to: 10.43.1.121/32
+        via: 10.43.1.131
+    enp2s0f2:
+      addresses:
+        - 10.43.1.122/24
+      routes:
+      - to: 10.43.1.112/32
+        via: 10.43.1.132
+    enp2s0f3:
+      addresses:
+        - 10.43.1.133/24
+      routes:
+      - to: 10.43.1.20/32
+        via: 10.43.1.133
+  version: 2
