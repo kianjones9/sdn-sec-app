@@ -1,0 +1,13 @@
+network:
+  ethernets:
+    enp6s0f0:
+      addresses:
+        - 134.117.92.214/24
+      gateway4: 134.117.92.1
+    enp6s0f1:
+      addresses:
+        - 10.43.1.20/24
+      routes:
+        - to: 10.43.1.133
+          via: 10.43.1.20
+  version: 2

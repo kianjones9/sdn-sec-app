@@ -1,0 +1,27 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+# Include files from /etc/network/interfaces.d:
+source-directory /etc/network/interfaces.d
+auto eth0
+iface eth0 inet static
+address 134.117.92.235
+netmask 255.255.255.0
+gateway 134.117.92.1
+
+auto eth1
+iface eth1 inet static
+address 10.43.1.141
+netmask 255.255.255.0
+up route add -net 10.43.1.122 netmask 255.255.255.255 dev eth1
+
+auto eth2
+iface eth2 inet static
+address 10.43.1.142
+netmask 255.255.255.0
+up route add -net 10.43.1.113 netmask 255.255.255.255 dev eth2
+up route add -net 10.43.1.10 netmask 255.255.255.255 gw 10.43.1.113
+
+auto eth3
+iface eth3 inet static
+address 10.43.1.143
+netmask 255.255.255.0
+up route add -net 10.43.1.30 netmask 255.255.255.255 dev eth3
