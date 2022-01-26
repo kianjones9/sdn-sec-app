@@ -8,7 +8,7 @@ parser.add_argument('--action', type=str, choices=["create", "delete"],
 parser.add_argument('--config', type=str,
                     help='filename of config file')
 parser.add_argument('--filter', type=str,
-                    help='filename of config file', default="rack-")
+                    help='container prefix for which to filter', default="rack-")
 
 args = vars(parser.parse_args())
 
