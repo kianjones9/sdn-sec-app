@@ -1,8 +1,8 @@
 network:
   ethernets:
-    eth0:
+    enp2s0f0:
       dhcp4: true         
-    eth1:
+    enp2s0f1:
       addresses:
         - 10.43.1.121/24
       routes:
@@ -10,10 +10,10 @@ network:
         via: 10.43.1.131
       - to: 10.43.1.131/32
         via: 10.43.1.121  
-    eth2:
+    enp2s0f2:
       addresses:
         - 10.43.1.122/24
       routes:
       - to: 10.43.1.141/32
         via: 10.43.1.122
-version: 2
+  version: 2
