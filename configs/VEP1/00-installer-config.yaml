@@ -1,7 +1,7 @@
 network:
   ethernets:
     enp2s0f0:
-      addresses: [134.117.92.X/24]
+      addresses: [134.117.92.243/24]
       gateway4: 134.117.92.1
       nameservers:
           addresses: [134.117.1.11, 134.117.242.35]
