@@ -10,6 +10,9 @@ network:
         via: 10.43.1.131
       - to: 10.43.1.112/32
         via: 10.43.1.131
+      gateway4: 10.43.1.131
+      nameservers:
+        addresses: [134.117.1.11, 134.117.242.35]
 
     enp2s0f2:
       addresses:
