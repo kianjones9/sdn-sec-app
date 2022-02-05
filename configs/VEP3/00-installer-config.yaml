@@ -21,10 +21,17 @@ network:
         via: 10.43.1.112
       - to: 10.43.1.142/32
         via: 10.43.1.112
-    enp2s0f3:
-      addresses:
-        - 10.43.1.133/24
-      routes:
-      - to: 10.43.1.20/32
-        via: 10.43.1.133
+
+        #enp2s0f3:
+        #  addresses:
+        #  routes:
+    #  addresses:
+    #    - 10.43.1.133/24
+    #  routes:
+    #  - to: 10.43.1.20/32
+    #    via: 10.43.1.133
+  bridges:
+    br1:
+      interfaces: []
+      addresses: [192.168.1.2/24]
   version: 2
