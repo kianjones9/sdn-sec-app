@@ -1,0 +1,23 @@
+{
+    "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003eb297d33847",
+        "treatment": {
+            "instructions": [
+                {
+                    "type": "OUTPUT",
+                    "port": "CONTROLLER"
+                }
+            ]
+        },
+        "selector": {
+            "criteria": [
+                {
+                    "type": "IPV4_SRC",
+                    "ip": "10.43.1.20/24"
+                }
+            ]
+        }
+    }
+}
