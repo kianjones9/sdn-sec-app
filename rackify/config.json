@@ -10,7 +10,7 @@
                     "environment": {
                         "TZ": "America/Toronto",
                         "BLOG_DB_CONNECTION": "mysql",
-                        "BLOG_MYSQL_HOST": "mariadb",
+                        "BLOG_MYSQL_HOST": "rack-023-db-0",
                         "BLOG_MYSQL_PORT": "3306",
                         "BLOG_MYSQL_USER": "blog",
                         "BLOG_MYSQL_PASS": "blog",
