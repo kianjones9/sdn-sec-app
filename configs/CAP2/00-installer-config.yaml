@@ -7,7 +7,4 @@ network:
     enp6s0f1:
       addresses:
         - 10.43.1.20/24
-      routes:
-        - to: 10.43.1.133
-          via: 10.43.1.20
   version: 2
