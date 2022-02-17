@@ -1,15 +1,19 @@
 network:
   ethernets:
-    enp2s0f0:
-      dhcp4: true         
     enp2s0f1:
       addresses:
         - 10.43.1.121/24
       routes:
       - to: 10.43.1.10/32
         via: 10.43.1.131
-      - to: 10.43.1.131/32
-        via: 10.43.1.121  
+      - to: 10.43.1.20/32
+        via: 10.43.1.131
+      - to: 10.43.1.112/32
+        via: 10.43.1.131
+      gateway4: 10.43.1.131
+      nameservers:
+        addresses: [134.117.1.11, 134.117.242.35]
+
     enp2s0f2:
       addresses:
         - 10.43.1.122/24
