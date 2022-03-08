@@ -21,6 +21,128 @@
             ]
         }
     },
+    "VEP3toVEP1": {
+        "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003c2c301bbd02",
+        "treatment": {
+            "instructions": [
+                {
+                    
+                    "type": "OUTPUT",
+                    "port": "3"
+                },
+                {
+                    "type":"L2MODIFICATION",
+                    "subtype":"ETH_SRC",
+                    "mac": "3c:2c:30:1b:bd:02"
+                  }
+                  
+            ]
+        },
+        "selector": {
+            "criteria": [
+                {
+                    "type": "IPV4_SRC",
+                    "ip": "10.43.1.20/24"
+                },
+                {
+                    "type": "ETH_DST",
+                    "mac": "3c:2c:30:1b:9c:82" 
+                },
+                {
+                    "type": "ETH_SRC",
+                    "ip": "b4:96:91:25:5b:56"
+                }
+                
+            ]
+        }
+    },
+    "VEP1_2-1_default": {
+        "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003c2c301b9c81",
+        "treatment": {
+            "instructions": [
+                {
+                    "type": "OUTPUT",
+                    "port": "4"
+                }
+            ]
+        },
+        "selector": {
+            "criteria": [{
+                "type": "IN_PORT",
+                "port": "3"
+            }
+            ]
+        }
+    },
+    "VEP1_1-2_default": {
+        "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003c2c301b9c81",
+        "treatment": {
+            "instructions": [
+                {
+                    "type": "OUTPUT",
+                    "port": "3"
+                }
+            ]
+        },
+        "selector": {
+            "criteria": [{
+                "type": "IN_PORT",
+                "port": "4"
+            }
+            ]
+        }
+    },
+    "VEP3_2-1_default": {
+        "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003c2c301bbd02",
+        "treatment": {
+            "instructions": [
+                {
+                    "type": "OUTPUT",
+                    "port": "4"
+                }
+            ]
+        },
+        "selector": {
+            "criteria": [{
+                "type": "IN_PORT",
+                "port": "3"
+            }
+            ]
+        }
+    },
+    "VEP3_1-2_default": {
+        "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003c2c301bbd02",
+        "treatment": {
+            "instructions": [
+                {
+                    "type": "OUTPUT",
+                    "port": "4"
+                }
+            ]
+        },
+        "selector": {
+            "criteria": [{
+                "type": "IN_PORT",
+                "port": "3"
+            }
+            ]
+        }
+    },
     "NAT bb1 to bb2": {
         "priority": 40000,
         "timeout": 0,
@@ -29,16 +151,6 @@
         "treatment": {
             "instructions": [
                 {
-                    "type": "L3MODIFICATION",
-                    "subtype": "IPV4_DST",
-                    "ip": "192.168.1.1"
-                },
-                {
-                    "type": "L3MODIFICATION",
-                    "subtype": "IPV4_SRC",
-                    "ip": "192.168.0.1"
-                },
-                {
                     "type": "L2MODIFICATION",
                     "subtype": "ETH_SRC",
                     "mac": "b4:96:91:25:5b:fe"
@@ -46,19 +158,33 @@
                 {
                     "type": "L2MODIFICATION",
                     "subtype": "ETH_DST",
-                    "mac": "b4:96:91:25:5b:54"
+                    "mac": "b4:96:91:25:5b:56"
+                },
+                {
+                    "type": "L3MODIFICATION",
+                    "subtype": "IPV4_SRC",
+                    "ip": "192.168.0.1"
+                },
+                {
+                    "type": "L3MODIFICATION",
+                    "subtype": "IPV4_DST",
+                    "ip": "192.168.3.1"
+                },
+                {
+                    "type": "OUTPUT",
+                    "port": "IN_PORT"
                 }
             ]
         },
         "selector": {
             "criteria": [
                 {
-                    "type": "IPV4_DST",
-                    "ip": "10.43.1.0/24"
+                    "type": "ETH_TYPE",
+                    "ethType": "0x800"
                 },
                 {
-                    "type": "ETH_SRC",
-                    "mac": "b4:96:91:25:5b:54"
+                    "type": "IPV4_DST",
+                    "ip": "192.168.2.0/24"
                 }
             ]
         }
@@ -71,16 +197,6 @@
         "treatment": {
             "instructions": [
                 {
-                    "type": "L3MODIFICATION",
-                    "subtype": "IPV4_DST",
-                    "ip": "192.168.0.1"
-                },
-                {
-                    "type": "L3MODIFICATION",
-                    "subtype": "IPV4_SRC",
-                    "ip": "192.168.1.1"
-                },
-                {
                     "type": "L2MODIFICATION",
                     "subtype": "ETH_SRC",
                     "mac": "b4:96:91:25:5b:fe"
@@ -88,19 +204,85 @@
                 {
                     "type": "L2MODIFICATION",
                     "subtype": "ETH_DST",
-                    "mac": "b4:96:91:25:5b:54"
+                    "mac": "b4:96:91:25:5b:56"
+                },
+                {
+                    "type": "L3MODIFICATION",
+                    "subtype": "IPV4_SRC",
+                    "ip": "192.168.1.1"
+                },
+                {
+                    "type": "L3MODIFICATION",
+                    "subtype": "IPV4_DST",
+                    "ip": "192.168.5.1"
+                },
+                {
+                    "type": "OUTPUT",
+                    "port": "IN_PORT"
                 }
             ]
         },
         "selector": {
             "criteria": [
                 {
-                    "type": "IPV4_DST",
-                    "ip": "10.43.1.0/24"
+                    "type": "ETH_TYPE",
+                    "ethType": "0x800"
                 },
                 {
-                    "type": "ETH_SRC",
-                    "mac": "b4:96:91:25:5b:54"
+                    "type": "IPV4_DST",
+                    "ip": "192.168.4.0/24"
+                }
+            ]
+        }
+    },
+    "demo_drop": {
+        "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003c2c301bbd02",
+        "treatment": {
+            "instructions": [
+                {
+                    "type": "OUTPUT",
+                    "port": "3"
+                }
+            ]
+        },
+        "selector": {
+            "criteria": [
+                {
+                    "type": "ETH_TYPE",
+                    "ethType": "0x800"
+                },
+                {
+                    "type": "IPV4_DST",
+                    "ip": "10.43.1.0/24"
+                }
+            ]
+        }
+    },
+    "demo_accept": {
+        "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003c2c301bbd02",
+        "treatment": {
+            "instructions": [
+                {
+                    "type": "OUTPUT",
+                    "port": "DROP"
+                }
+            ]
+        },
+        "selector": {
+            "criteria": [
+                {
+                    "type": "ETH_TYPE",
+                    "ethType": "0x800"
+                },
+                {
+                    "type": "IPV4_DST",
+                    "ip": "10.43.1.0/24"
                 }
             ]
         }
