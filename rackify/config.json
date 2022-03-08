@@ -4,7 +4,7 @@
         "first_subnet":"192.168.26.0",
         "rack_config":[
             {
-                "app":"m1k1o/blog:latest",
+            "app":"m1k1o/blog:latest",
 		        "app_name":"blog",
                 "replicas":1,
                 "args":{
@@ -20,8 +20,8 @@
                 }
             },
             {
-                "app":"mariadb-blog",
-		        "app_name":"db",
+            "app":"mariadb:10.1",
+		        "app_name": "db",
                 "replicas":1,
                 "args":{
                     "environment":{

@@ -37,14 +37,19 @@ def create_rack(rack_config, ip):
     # run and connect OVS containers
     net = client.networks.create(name="rack-"+rack_id, ipam=ipam)
 
-    con = client.containers.run("kianjones9/ovs:2.16_debian_5.8.0-63-generic", "ovsdb-server", name=f"rack-{rack_id}-ovsdb-server-1", detach=True)
+    con = client.containers.run("kianjones9/ovs:latest", "ovsdb-server", name=f"rack-{rack_id}-ovsdb-server-1", detach=True)
 
     ip = increment_ip(ip, 3)
     net.connect(con.id, ipv4_address=ip)
     
-    ip = increment_ip(ip, 3)
-    con = client.containers.run("kianjones9/ovs:2.16_debian_5.8.0-63-generic", "ovs-vswitchd",  volumes_from=[f"rack-{rack_id}-ovsdb-server-1"], name=f"rack-{rack_id}-ovs-vswitchd-1", detach=True)
+    RACK_NUM = int(rack_id)
+    print(RACK_NUM)
 
+    ip = increment_ip(ip, 3)
+    con = client.containers.run("kianjones9/ovs:latest", "ovs-vswitchd",  volumes_from=[f"rack-{rack_id}-ovsdb-server-1"],
+                            name=f"rack-{rack_id}-ovs-vswitchd-1", cap_add=["NET_ADMIN"], environment={"RACK_NUM":RACK_NUM},
+                            detach=True)
+    con.exec_run("bash /config.sh")
     net.connect(con.id, ipv4_address=ip)
 
 
