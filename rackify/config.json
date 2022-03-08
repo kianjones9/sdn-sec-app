@@ -1,21 +1,34 @@
 {
     "topology":{
-        "rack_replicas":2,
-        "first_subnet":"192.168.4.0",
+        "rack_replicas":50,
+        "first_subnet":"192.168.50.0",
         "rack_config":[
             {
-                "app":"nginx",
-                "replicas":6,
+                "app":"m1k1o/blog:latest",
+		        "app_name": "blog",
+                "replicas":1,
                 "args":{
-                    
+                    "environment": {
+                        "TZ": "America/Toronto",
+                        "BLOG_DB_CONNECTION": "mysql",
+                        "BLOG_MYSQL_HOST": "mariadb",
+                        "BLOG_MYSQL_PORT": "3306",
+                        "BLOG_MYSQL_USER": "blog",
+                        "BLOG_MYSQL_PASS": "blog",
+                        "BLOG_DB_NAME": "blog"
+                    }
                 }
             },
             {
-                "app":"mysql",
-                "replicas":4,
+                "app":"mariadb:10.1",
+		        "app_name": "db",
+                "replicas":1,
                 "args":{
                     "environment":{
-                        "MYSQL_ROOT_PASSWORD":"my-secret-pw"
+                        "MYSQL_USER": "blog",
+                        "MYSQL_PASSWORD": "blog" ,
+                        "MYSQL_DATABASE": "blog",
+                        "MYSQL_ROOT_PASSWORD": "root"
                     }
                 }
             }
