@@ -1,0 +1,70 @@
+
+
+body{background-color: #272537;
+}
+
+ #navbar ul { 
+	margin: 0; 
+	padding: 5px; 
+	list-style-type: none; 
+	text-align: center; 
+	background-color: #272537; 
+	} 
+ 
+#navbar ul li {  
+	display: inline; 
+	} 
+ 
+#navbar ul li a { 
+	text-decoration: none; 
+	padding: .2em 1em; 
+	color: #fff; 
+	background-color: #272537; 
+	} 
+ 
+#navbar ul li a:hover { 
+	color: #000; 
+	background-color: #fff; 
+	} 
+ 
+#table h1 {
+
+	color: rgb(255, 255, 255);
+}	
+
+#table h1 {color: #fff; text-align: center;}
+
+#table table{
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+
+.container {  display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1.3fr 1.5fr 1.4fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+  }
+  
+  .Configure { grid-area: 1 / 1 / 2 / 2; }
+  
+  .Monitor { grid-area: 1 / 2 / 2 / 3; }
+  
+  .Slot-3 { grid-area: 2 / 1 / 3 / 2; }
+  
+  .Slot-4 { grid-area: 2 / 2 / 3 / 3; }
+  
+  .Slot-5 { grid-area: 1 / 1 / 2 / 2; }
+  
+  .Slot-1 { grid-area: 1 / 1 / 2 / 2; }
+  
+  .Slot-2 { grid-area: 1 / 2 / 2 / 3; }
+  
+  .Slot5 { grid-area: 3 / 2 / 4 / 3; }
+  
+  .Slot6 { grid-area: 3 / 2 / 4 / 3; }
+  
+  .Slot555675 { grid-area: 3 / 1 / 4 / 2; }
+  

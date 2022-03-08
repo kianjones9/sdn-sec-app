@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<head> 
+<title>SDN Security App</title> 
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+<style>
+.container {  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "con1 con2"
+    "con3 con3";
+}
+
+.con1 { grid-area: con1; }
+
+.con2 { grid-area: con2; }
+
+.con3 { grid-area: con3; }
+
+
+
+  
+.collapsible {
+  background-color: #272537;
+  color: #fff;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: center;
+  outline: #fff solid 2px;
+  font-size: 20px;
+  font-style: bold;
+  
+}
+
+.active, .collapsible:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.applybtn{
+background-color: #272537;
+color: #fff;
+text-align: center;
+outline: #fff solid 2px;
+width: 100%;
+cursor: pointer;
+padding: 8px;
+
+}
+
+.active, .applybtn:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+  </style>
+</head> 
+<h1 style="color: #fff; text-align: center;">SDN SECURITY APPLICATION</h1>
+<body> 
+<div id="navbar"> 
+  <ul> 
+	<li><a href="/home">HOME</a></li> 
+	<li><a href="/devices">DEVICES</a></li> 
+	<li><a href="/flows">FLOWS</a></li> 
+	<li><a href="/stats">STATISTICS & MONITORING</a></li> 
+	<li><a href="/configure">CONFIGURE</a></li>   
+  </ul>
+</div> 
+  <h2 style="color: #fff; text-align: center;">STATISTICS AND MONITORING</h2>
+  
+  <div class="container">
+
+	<div class="con1">
+		<button type="button" class="collapsible">Devices Online: {{onlinecount}}</button>
+		<div class="content">
+  		<p>{{onlinedevices}}</p>
+		</div>
+		<button type="button" class="collapsible">Devices Offline: {{offlinecount}}</button>
+		<div class="content">
+  		<p>{{offlinedevices}}</p>
+		</div>
+		
+	</div>
+
+	<div class="con2">
+		
+		<button type="button" class="collapsible">Flow Count: {{flowcount}}</button>
+		<div class="content">
+  		<p>{{flows}}</p>
+		</div>
+		<button type="button" class="collapsible">Packet Count: {{packetcount}}</button>
+		<div class="content">
+  		<p>Total Packets Sent: {{packetcount}}</p>
+		</div>
+	</div>
+	
+	<div class="con3">
+		<button type="button" class="collapsible">Real Time Statistics</button>
+		<div class="content">
+			<form action="/pullstats" method="get">
+				<tr><button type="submit" class="applybtn" onclick="timeWarning()">Pull Statistics</button></tr>
+			</form>
+			<br>
+			<p>Average Packets Per Second: {{avgpackets}}PKT/s</p>
+		</div>
+
+
+	</div>
+	
+  </div>
+
+
+<!-- Script to open and close flow options buttons -->
+<script>
+function timeWarning(){alert("This Process will take 10 seconds");}
+
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+	
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+		  content.style.display = "none";
+		} else {
+		  content.style.display = "block";
+		}
+	  });
+	}
+	</script>
+
+</body> 
+</html>
