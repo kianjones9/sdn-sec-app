@@ -63,8 +63,9 @@ def create_rack(rack_config, ip):
             
             ip = increment_ip(ip, 3)
 
-            con = client.containers.run(app["app"], name=f"rack-{rack_id}-{app['app_name']}-{i}", detach=True, **app["args"])
+            con = client.containers.run(app["app"], name=f"rack-{rack_id}-{app['app_name']}-{i}", cap_add=["NET_ADMIN"], detach=True, **app["args"])
             net.connect(con.id, ipv4_address=ip)
+            con.exec_run("bash /config.sh")
     
     print(f"Rack {rack_id} created")
 

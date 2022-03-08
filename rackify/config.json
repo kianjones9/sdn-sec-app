@@ -1,7 +1,7 @@
 {
     "topology":{
-        "rack_replicas":1,
-        "first_subnet":"192.168.26.0",
+        "rack_replicas":2,
+        "first_subnet":"192.168.110.0",
         "rack_config":[
             {
             "app":"m1k1o/blog:latest",
@@ -20,7 +20,7 @@
                 }
             },
             {
-            "app":"mariadb:10.1",
+                "app":"kianjones9/mariadb",
 		        "app_name": "db",
                 "replicas":1,
                 "args":{
