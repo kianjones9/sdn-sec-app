@@ -1,0 +1,16 @@
+{
+    "apps": {
+        "org.onosproject.provider.bgp.cfg": {
+            "bgpapp": {
+                "routerId": "10.43.1.10",
+                "localAs": 100,
+                "maxSession": 20,
+                "lsCapability": true,
+                "holdTime": 180,
+                "largeAsCapability": false,
+                "flowSpecCapability": "IPV4",
+                "bgpPeer":[ {"peerIp": "10.43.1.115", "remoteAs": 100, "peerHoldTime": 120, "connectMode":"active"}]
+            }
+        }
+    }
+}
