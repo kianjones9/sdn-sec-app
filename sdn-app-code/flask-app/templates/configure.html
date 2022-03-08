@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<head> 
+<title>SDN Security App</title> 
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+<style>
+	.container {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "con1 con2 con3"
+    "con4 con5 con6"
+    "con7 con8 con9";
+}
+
+.con1 { grid-area: con1; }
+
+.con2 { grid-area: con2; }
+
+.con3 { grid-area: con3; }
+
+.con4 { grid-area: con4; }
+
+.con5 { grid-area: con5; }
+
+.con6 { grid-area: con6; }
+
+.con7 { grid-area: con7; }
+
+.con8 { grid-area: con8; }
+
+.con9 { grid-area: con9; }
+
+
+
+.collapsible {
+  background-color: #272537;
+  color: #fff;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: center;
+  outline: #fff solid 2px;
+  font-size: 20px;
+  font-style: bold;
+  
+}
+
+.active, .collapsible:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.applybtn{
+background-color: #272537;
+color: #fff;
+text-align: center;
+outline: #fff solid 2px;
+width: 100%;
+cursor: pointer;
+padding: 8px;
+
+}
+
+.active, .applybtn:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+
+	  </style>
+</head> 
+<h1 style="color: #fff; text-align: center;">SDN SECURITY APPLICATION</h1>
+<body> 
+<div id="navbar"> 
+  <ul> 
+	<li><a href="/home">HOME</a></li> 
+	<li><a href="/devices">DEVICES</a></li> 
+	<li><a href="/flows">FLOWS</a></li> 
+	<li><a href="/stats">STATISTICS & MONITORING</a></li> 
+	<li><a href="/configure">CONFIGURE</a></li>  
+  </ul>
+</div> 
+  <h2 style="color: #fff; text-align: center;">CONFIGURE</h2>
+  <h2 style="color: #fff; text-align: center;">{{testitem}}</h2>
+  <div class="container">
+
+	<div class="con1">
+		<button type="button" class="collapsible">Demo Drop</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn" onclick="flowConfirm()">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+	<div class="con2">
+		<button type="button" class="collapsible">Demo Accept</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+	<div class="con3">
+		<button type="button" class="collapsible">VEP 3 to VEP 1</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+
+	<div class="con4">
+		<button type="button" class="collapsible">Rule #4</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+	<div class="con5">
+		<button type="button" class="collapsible">Rule #5</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+	<div class="con6">
+		<button type="button" class="collapsible">Rule #6</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+	<div class="con7">
+		<button type="button" class="collapsible">Rule #7</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+	<div class="con8">
+		<button type="button" class="collapsible">Rule #8</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+	<div class="con9">
+		<button type="button" class="collapsible">Rule #9</button>
+		<div class="content">
+  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
+		  <form action="/DemoAccept" method="post">
+			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+		  </form>
+		  	<br>
+		</div>
+	</div>
+
+  </div>
+
+<!-- Script to open and close flow options buttons -->
+  <script>
+
+	/* func to send alert, not sure if i like we will see*/
+	function flowConfirm(){alert("Attempting To Apply Flow Rule");}
+
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+	
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+		  content.style.display = "none";
+		} else {
+		  content.style.display = "block";
+		}
+	  });
+	}
+	</script>
+
+</body> 
+</html>
