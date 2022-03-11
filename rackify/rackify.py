@@ -63,10 +63,21 @@ def create_rack(rack_config, ip):
             
             ip = increment_ip(ip, 3)
 
+            if app["app_name"] == "blog":
+                
+                db_addr = app["args"]["environment"]["BLOG_MYSQL_HOST"]
+                
+                db_addr = db_addr.split(".")
+                db_addr[2] = rack_id # a.b.2.d -> a.b.2.d
+                db_addr[3] = ip.split(".")[-1] # a.b.c.13 -> a.b.c.13
+                db_addr = ".".join(db_addr)
+
+                app["args"]["environment"]["BLOG_MYSQL_HOST"] = db_addr
+            
             con = client.containers.run(app["app"], name=f"rack-{rack_id}-{app['app_name']}-{i}", cap_add=["NET_ADMIN"], detach=True, **app["args"])
             net.connect(con.id, ipv4_address=ip)
             con.exec_run("bash /config.sh")
-    
+
     print(f"Rack {rack_id} created")
 
 
