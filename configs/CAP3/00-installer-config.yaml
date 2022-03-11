@@ -5,6 +5,10 @@ network:
         - 134.117.92.209/24
       gateway4: 134.117.92.1
     enp6s0f1:
-       addresses:
-         - 10.43.1.30/24
+      addresses:
+        - 10.43.1.30/24
+      routes:
+       - to: 172.17.0.0/16
+         via: 10.43.1.30
+
   version: 2
