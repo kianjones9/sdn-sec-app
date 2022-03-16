@@ -22,7 +22,7 @@ ovs-vsctl set bridge br0 protocols=OpenFlow10,OpenFlow13
 
 # set bridge IP
 ip addr flush dev eth0
-ip addr add 172.17.$RACK_NUM.12/24 dev br0
+ip addr add 172.$SERVER_ID.$RACK_NUM.12/24 dev br0
 ip link set br0 up
 
 # add default route

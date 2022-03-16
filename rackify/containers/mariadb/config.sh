@@ -4,10 +4,10 @@
 # IP=$(ip add | grep -o 192.168.[0-9]*.[0-9]*/24)
 
 # networking config
-ip route del default 
+# ip route del default 
 
 # set bridge IP
-ip route add default via dev eth0
+# ip route add default via dev eth0
 
 #ip addr add 172.17.$RACK_NUM.12/24 dev br0
 #ip link set br0 up

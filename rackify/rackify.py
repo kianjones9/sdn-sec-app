@@ -2,6 +2,8 @@ import json
 import docker
 client = docker.from_env()
 
+SERVER_ID = [net.attrs["IPAM"]["Config"][0]["Subnet"] for net in client.networks.list() if net.name == "bridge"][0].split(".")[1]
+
 def increment_ip(ip, octet_to_inc):
     
     split = ip.split(".")
@@ -47,7 +49,7 @@ def create_rack(rack_config, ip):
 
     ip = increment_ip(ip, 3)
     con = client.containers.run("kianjones9/ovs:latest", "ovs-vswitchd",  volumes_from=[f"rack-{rack_id}-ovsdb-server-1"],
-                            name=f"rack-{rack_id}-ovs-vswitchd-1", cap_add=["NET_ADMIN"], environment={"RACK_NUM":RACK_NUM},
+                            name=f"rack-{rack_id}-ovs-vswitchd-1", cap_add=["NET_ADMIN"], environment={"SERVER_ID":SERVER_ID, "RACK_NUM":RACK_NUM},
                             detach=True)
     con.exec_run("bash /config.sh")
     net.connect(con.id, ipv4_address=ip)
