@@ -48,8 +48,8 @@ def create_rack(rack_config, ip):
     print(RACK_NUM)
 
     ip = increment_ip(ip, 3)
-    con = client.containers.run("kianjones9/ovs:latest", "ovs-vswitchd",  volumes_from=[f"rack-{rack_id}-ovsdb-server-1"],
-                            name=f"rack-{rack_id}-ovs-vswitchd-1", cap_add=["NET_ADMIN"], environment={"SERVER_ID":SERVER_ID, "RACK_NUM":RACK_NUM},
+    con = client.containers.run("kianjones9/ovs:latest", "ovs-vswitchd",  volumes_from=[f"rack-{rack_id}-ovsdb-server-0"],
+                            name=f"rack-{rack_id}-ovs-vswitchd-0", cap_add=["NET_ADMIN"], environment={"SERVER_ID":SERVER_ID, "RACK_NUM":RACK_NUM},
                             detach=True)
     con.exec_run("bash /config.sh")
     net.connect(con.id, ipv4_address=ip)
