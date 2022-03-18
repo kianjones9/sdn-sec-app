@@ -1,4 +1,4 @@
-REPO = "kianjones9/mariadb"
+REPO = "kianjones9/blog"
 tag = "latest"
 
 build: ;docker build -t ${REPO}:${tag} .
