@@ -1,7 +1,7 @@
 {
     "topology":{
         "rack_replicas":5,
-        "first_subnet":"192.168.0.0",
+        "first_subnet":"192.169.0.0",
         "rack_config":[
             {
             "app":"m1k1o/blog:latest",
