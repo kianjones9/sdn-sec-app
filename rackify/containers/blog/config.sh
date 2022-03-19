@@ -1,5 +1,10 @@
 #!/bin/bash
 
+apt get update
+apt install iproute2
+
+ip link set eth0 down
+
 # get IP to remove
 # IP=$(ip add | grep -o 192.168.[0-9]*.[0-9]*/24)
 

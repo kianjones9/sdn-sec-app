@@ -1,45 +1,35 @@
 #!/bin/bash
 
 # Create veth pairs (2 for OVS, 1 for blog)
-ip link add ovs{{ RACK_NUM }}-0-int type veth peer name ovs{{ RACK_NUM }}-0-ext
-ip link add ovs{{ RACK_NUM }}-1-int type veth peer name ovs{{ RACK_NUM }}-1-ext
-ip link add blog{{ RACK_NUM }}-0-int type veth peer name blog{{ RACK_NUM }}-0-ext
+ip link add ovs{{ RACK_ID }}-0-int type veth peer name ovs{{ RACK_ID }}-0-ext
+ip link add ovs{{ RACK_ID }}-1-int type veth peer name ovs{{ RACK_ID }}-1-ext
+ip link add blog{{ RACK_ID }}-0-int type veth peer name blog{{ RACK_ID }}-0-ext
 
 # Enable local side of veth pair
-ip link set ovs{{ RACK_NUM }}-0-ext up
-ip link set ovs{{ RACK_NUM }}-1-ext up
-ip link set blog{{ RACK_NUM }}-0-ext up
+ip link set ovs{{ RACK_ID }}-0-ext up
+ip link set ovs{{ RACK_ID }}-1-ext up
+ip link set blog{{ RACK_ID }}-0-ext up
 
 # Bridge container interfaces
-brctl addbr rack-{{ RACK_NUM }}
-brctl addif rack-{{ RACK_NUM }} ovs{{ RACK_NUM }}-0-ext
-brctl addif rack-{{ RACK_NUM }} blog3-0-ext
-ip link set rack-{{ RACK_NUM }} up
+brctl addbr rack-{{ RACK_ID }}
+brctl addif rack-{{ RACK_ID }} ovs{{ RACK_ID }}-0-ext
+brctl addif rack-{{ RACK_ID }} blog{{ RACK_ID }}-0-ext
+ip link set rack-{{ RACK_ID }} up
 
 # OVS configuration
-OVS_PID=$(docker container inspect -f \{\{.State.Pid\}\} rack-{{ RACK_NUM }}-ovs-vswitchd-0)
-ip link set netns $OVS_PID dev ovs{{ RACK_NUM }}-0-int
-nsenter -t $OVS_PID -n ip link set ovs{{ RACK_NUM }}-0-int up
-ip link set netns $OVS_PID dev ovs{{ RACK_NUM }}-1-int
-nsenter -t $OVS_PID -n ip link set ovs{{ RACK_NUM }}-1-int up
-
-# Add OVS container interfaces to its bridge
-nsenter -t $OVS_PID -n ovs-vsctl add-port br0 ovs{{ RACK_NUM }}-0-int
-nsenter -t $OVS_PID -n ovs-vsctl add-port br0 ovs{{ RACK_NUM }}-1-int
+OVS_PID=$(docker container inspect -f \{\{.State.Pid\}\} rack-{{ RACK_ID }}-ovs-vswitchd-0)
+ip link set netns $OVS_PID dev ovs{{ RACK_ID }}-0-int
+nsenter -t $OVS_PID -n ip link set ovs{{ RACK_ID }}-0-int up
+ip link set netns $OVS_PID dev ovs{{ RACK_ID }}-1-int
+nsenter -t $OVS_PID -n ip link set ovs{{ RACK_ID }}-1-int up
 
 # Blog configuration
-BLOG_PID=$(docker container inspect -f \{\{.State.Pid\}\} rack-{{ RACK_NUM }}-blog-0)
-ip link set netns $BLOG_PID dev blog{{ RACK_NUM }}-0-int
-nsenter -t $BLOG_PID -n ip link set blog{{ RACK_NUM }}-0-int up
-nsenter -t $BLOG_PID -n ip add add 192.{{ SERVER_SUBNET }}.{{ RACK_NUM }}.13/24 dev blog{{ RACK_NUM }}-0-int
-nsenter -t $BLOG_PID -n ip route add default dev blog{{ RACK_NUM }}-0-int
-
-# Add a default route through the blog container's veth pair 
-nsenter -t $BLOG_PID -n ip route add default dev blog3-0-int
+BLOG_PID=$(docker container inspect -f \{\{.State.Pid\}\} rack-{{ RACK_ID }}-blog-0)
+ip link set netns $BLOG_PID dev blog{{ RACK_ID }}-0-int
+nsenter -t $BLOG_PID -n ip link set blog{{ RACK_ID }}-0-int up
+nsenter -t $BLOG_PID -n ip add add {{ APP_SUBNET }}.13/24 dev blog{{ RACK_ID }}-0-int
+nsenter -t $BLOG_PID -n ip route add default dev blog{{ RACK_ID }}-0-int
 
 # Add local routes needed for the rack networks (ovs bridge IP and rack subnet)
-ip route add 172.{{ SERVER_ID }}.{{ RACK_NUM }}.12 dev ovs{{ RACK_NUM }}-1-ext
-ip route add 192.{{ SERVER_SUBNET }}.{{ RACK_NUM }}.0/24 dev ovs{{ RACK_NUM }}-1-ext
-
-
-
+ip route add {{ MGMT_SUBNET }}.12 dev ovs{{ RACK_ID }}-1-ext
+ip route add {{ APP_SUBNET }}.0/24 dev ovs{{ RACK_ID }}-1-ext
