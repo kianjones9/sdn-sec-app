@@ -19,8 +19,8 @@ elif sys.argv[1] == "PPS":
     sendpfast(pkt, pps=1000, loop=10000)
 
 elif sys.argv[1] == "BW":
-    #Will output 100mbps to dst for 10 seconds
-    pkt = Ether()/IP(dst=sys.argv[2],src=sys.argv[3])/TCP()/"#Demo Data" 
+    #Will output 500mbps to dst for 10 seconds
+    pkt = Ether()/IP(dst=sys.argv[2],src=sys.argv[3])/TCP()/"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz" 
     # PPS 2000 = 1 mpbs
     # loop is how long you want to run it with each 1 second = pps x 10
     sendpfast(pkt, pps=200000, loop=2000000)
