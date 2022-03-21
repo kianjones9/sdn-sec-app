@@ -14,3 +14,4 @@ app activate org.onosproject.openflow
 app activate org.onosproject.optical-model
 app activate org.onosproject.proxyarp
 app activate org.onosproject.fwd
+app activate org.onosproject.drivers.p4runtime
