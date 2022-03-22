@@ -1,0 +1,33 @@
+#SSH CONFIG FILE -> Updated to work with the Cap2/3 Carleton interfaces down
+Host cap1
+        HostName 134.117.92.231
+        User capstone01
+        IdentityFile ~/.ssh/capstone.key
+Host cap2
+        HostName 10.43.1.20
+        ProxyJump vep3
+        User capstone02
+        IdentityFile ~/.ssh/capstone.key
+Host cap3
+        HostName 10.43.1.30
+        ProxyJump vep4
+        User capstone03
+        IdentityFile ~/.ssh/capstone.key
+Host vep1
+        HostName 134.117.92.243
+        User calvin
+        IdentityFile ~/.ssh/capstone.key
+Host vep2
+        HostName 10.43.1.121
+        ProxyJump vep3
+        User calvin
+        IdentityFile ~/.ssh/capstone.key
+Host vep3
+        ForwardAgent yes
+        HostName 134.117.92.171
+        User calvin
+        IdentityFile ~/.ssh/capstone.key
+Host vep4
+        HostName 134.117.92.248
+        User calvin
+        IdentityFile ~/.ssh/capstone.key
