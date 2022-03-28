@@ -68,8 +68,8 @@ def create_rack(rack_config, ip):
                 db_addr = app["args"]["environment"]["BLOG_MYSQL_HOST"]
                 
                 db_addr = db_addr.split(".")
-                db_addr[2] = rack_id # a.b.2.d -> a.b.2.d
-                db_addr[3] = ip.split(".")[-1] # a.b.c.13 -> a.b.c.13
+                db_addr[2] = str(RACK_NUM) # a.b.2.d -> a.b.2.d
+                # db_addr[3] = ip.split(".")[-1] # a.b.c.13 -> a.b.c.13
                 db_addr = ".".join(db_addr)
 
                 app["args"]["environment"]["BLOG_MYSQL_HOST"] = db_addr
