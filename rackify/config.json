@@ -1,7 +1,7 @@
 {
     "topology":{
         "rack_replicas":5,
-        "first_subnet":"192.169.85.0",
+        "first_subnet":"192.16X.X.0",
         "rack_config":[
             {
                 "app":"kianjones9/blog:latest",
@@ -13,7 +13,7 @@
                             "BLOG_PASS": "password",
                             "TZ": "America/Toronto",
                             "BLOG_DB_CONNECTION": "mysql",
-                            "BLOG_MYSQL_HOST": "192.169.RACK_ID.14",
+                            "BLOG_MYSQL_HOST": "192.16X.RACK_ID.14",
                             "BLOG_MYSQL_PORT": "3306",
                             "BLOG_MYSQL_USER": "blog",
                             "BLOG_MYSQL_PASS": "blog",
