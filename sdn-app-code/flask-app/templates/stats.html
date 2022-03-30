@@ -3,6 +3,9 @@
 <title>SDN Security App</title> 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
 <style>
+
+/* CSS could use cleanup or reference style sheet */
+
 .container {  display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -21,8 +24,6 @@
 .con3 { grid-area: con3; }
 
 
-
-  
 .collapsible {
   background-color: #272537;
   color: #fff;
@@ -72,8 +73,6 @@ padding: 8px;
 <div id="navbar"> 
   <ul> 
 	<li><a href="/home">HOME</a></li> 
-	<li><a href="/devices">DEVICES</a></li> 
-	<li><a href="/flows">FLOWS</a></li> 
 	<li><a href="/stats">STATISTICS & MONITORING</a></li> 
 	<li><a href="/configure">CONFIGURE</a></li>   
   </ul>
@@ -85,11 +84,20 @@ padding: 8px;
 	<div class="con1">
 		<button type="button" class="collapsible">Devices Online: {{onlinecount}}</button>
 		<div class="content">
-  		<p>{{onlinedevices}}</p>
+		<p>
+			{% for item in onlinedevices %}
+   			<table>{{item}}</table>
+  			 {% endfor %}
+		</p>
+		
 		</div>
 		<button type="button" class="collapsible">Devices Offline: {{offlinecount}}</button>
 		<div class="content">
-  		<p>{{offlinedevices}}</p>
+			<p>
+				{% for item in offlinedevices %}
+				   <table>{{item}}</table>
+				   {% endfor %}
+			</p>
 		</div>
 		
 	</div>

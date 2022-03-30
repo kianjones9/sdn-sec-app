@@ -189,6 +189,35 @@
             ]
         }
     },
+    "testcase": {
+        "priority": 40000,
+        "timeout": 0,
+        "isPermanent": "true",
+        "deviceId": "of:00003c2c301bbd02",
+        "treatment": {
+            "instructions": [
+                {
+                    "type": "OUTPUT",
+                    "port": "CONTROLLER"
+                }
+            ]
+        },
+        "selector": {
+            "criteria": [{
+                "type": "ETH_TYPE",
+                "ethType": "0x800"
+            },
+            {
+                "type": "IPV4_DST",
+                "ip": "10.43.1.20/24"
+            },
+            {
+                "type": "IPV4_SRC",
+                "ip": "10.43.1.10/24"
+            }
+            ]
+        }
+    },
     "NAT bb2 to bb1": {
         "priority": 40000,
         "timeout": 0,

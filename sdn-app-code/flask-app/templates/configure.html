@@ -1,37 +1,70 @@
 <!DOCTYPE html>
 <head> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>SDN Security App</title> 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
 <style>
 	.container {  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
   grid-auto-columns: 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "con1 con2 con3"
-    "con4 con5 con6"
-    "con7 con8 con9";
+    "con1 con3";
 }
 
 .con1 { grid-area: con1; }
 
-.con2 { grid-area: con2; }
 
 .con3 { grid-area: con3; }
 
-.con4 { grid-area: con4; }
 
-.con5 { grid-area: con5; }
 
-.con6 { grid-area: con6; }
+.bottomcontainer {  display: grid;
+  grid-template-columns: 0.5fr 2.2fr 0.5fr;
+  grid-template-rows: 0.9fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "con1 con2 con3";
+}
 
-.con7 { grid-area: con7; }
+.botcon1 { grid-area: con1; }
 
-.con8 { grid-area: con8; }
+.botcon2 { grid-area: con2; }
 
-.con9 { grid-area: con9; }
+.botcon3 { grid-area: con3; }
+
+
+.bottomcontainer2 {  display: grid;
+  grid-template-columns: 0fr 3.8fr 0fr;
+  grid-template-rows: 0.9fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "con1 con2 con3";
+}
+
+.bottomcontainer3 {  display: grid;
+  grid-template-columns: 0fr 5.1fr 0fr;
+  grid-template-rows: 0.9fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "con1 con2 con3";
+}
+
+.botcon12 { grid-area: con1; }
+
+.botcon22 { grid-area: con2; }
+
+.botcon32 { grid-area: con3; }
+
+
 
 
 
@@ -77,6 +110,18 @@ padding: 8px;
   color: #000;
 }
 
+.addRow {
+  cursor: pointer;
+  size: 10px;
+  font-weight: bold;
+}
+
+.saddRow {
+  cursor: pointer;
+  size: 10px;
+  font-weight: bold;
+}
+
 
 	  </style>
 </head> 
@@ -85,127 +130,577 @@ padding: 8px;
 <div id="navbar"> 
   <ul> 
 	<li><a href="/home">HOME</a></li> 
-	<li><a href="/devices">DEVICES</a></li> 
-	<li><a href="/flows">FLOWS</a></li> 
 	<li><a href="/stats">STATISTICS & MONITORING</a></li> 
 	<li><a href="/configure">CONFIGURE</a></li>  
   </ul>
 </div> 
-  <h2 style="color: #fff; text-align: center;">CONFIGURE</h2>
+  <h2 style="color: #fff; text-align: center;">GENERAL CONFIGURATIONS</h2>
   <h2 style="color: #fff; text-align: center;">{{testitem}}</h2>
   <div class="container">
 
 	<div class="con1">
-		<button type="button" class="collapsible">Demo Drop</button>
+		<button type="button" class="collapsible">Post Flow From Library</button>
 		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
+		  <form action="/libraryflow" method="post">
+			<br>
+			<table></table>
+			<td>Device: </td>
+				<select name="flowdev" id="fdev"> 
+					{% for item in onlinedeviceID %}
+					<option value={{item}}>{{item}}</option>
+					{% endfor %}
+				</select>
+			<tr><td>Flow: </td></tr>
+				<select name="flowlib" id="flowb"> 
+					{% for item in flowlibrary %}
+					<option value={{item}}>{{item}}</option>
+					{% endfor %}
+				</select>
+				<p><br></p>
+
+			</table>
 			<tr><button type="submit" class="applybtn" onclick="flowConfirm()">APPLY FLOW</button></tr>
 		  </form>
 		  	<br>
 		</div>
 	</div>
 
-	<div class="con2">
-		<button type="button" class="collapsible">Demo Accept</button>
-		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
-			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
-		  </form>
-		  	<br>
-		</div>
-	</div>
+
 
 	<div class="con3">
-		<button type="button" class="collapsible">VEP 3 to VEP 1</button>
+		<button type="button" class="collapsible">Delete Flow</button>
 		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
-			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
+  		
+		  <form action="/deleteflow" enctype="multipart/form-data" method="post">
+			  <br>
+			  <tr>
+				  <td>Device: </td>
+				<select name="deletedev" id="ddev"> 
+					{% for item in onlinedeviceID %}
+					<option value={{item}}>{{item}}</option>
+					{% endfor %}
+				</select>
+				<td>ID: </td>
+			  </tr>
+			
+			<tr><td><input type="text" name ="deleteflow" id="fdev"  placeholder="Flow ID"></td></tr> 
+
+			<p><br></p>
+			<tr><button type="submit" class="applybtn">DELETE FLOW</button></tr>
 		  </form>
 		  	<br>
 		</div>
 	</div>
-
-
-	<div class="con4">
-		<button type="button" class="collapsible">Rule #4</button>
-		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
-			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
-		  </form>
-		  	<br>
-		</div>
-	</div>
-
-	<div class="con5">
-		<button type="button" class="collapsible">Rule #5</button>
-		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
-			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
-		  </form>
-		  	<br>
-		</div>
-	</div>
-
-	<div class="con6">
-		<button type="button" class="collapsible">Rule #6</button>
-		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
-			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
-		  </form>
-		  	<br>
-		</div>
-	</div>
-
-	<div class="con7">
-		<button type="button" class="collapsible">Rule #7</button>
-		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
-			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
-		  </form>
-		  	<br>
-		</div>
-	</div>
-
-	<div class="con8">
-		<button type="button" class="collapsible">Rule #8</button>
-		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
-			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
-		  </form>
-		  	<br>
-		</div>
-	</div>
-
-	<div class="con9">
-		<button type="button" class="collapsible">Rule #9</button>
-		<div class="content">
-  		<p>"instructions": [{"type": "OUTPUT","port": "3"}]<br>"selector": {"criteria": [{"type": "ETH_TYPE","ethType": "0x800"}<br>{"type": "IPV4_DST","ip": "10.43.1.0/24"}]</p>
-		  <form action="/DemoAccept" method="post">
-			<tr><button type="submit" class="applybtn">APPLY FLOW</button></tr>
-		  </form>
-		  	<br>
-		</div>
-	</div>
-
   </div>
 
-<!-- Script to open and close flow options buttons -->
+<br><br>
+
+  <h2 style="color: #fff; text-align: center;">CONFIGURE CUSTOM RULE</h2>
+  <h2 style="color: #fff; text-align: center;">{{testitem}}</h2>
+
+  <div class="bottomcontainer">
+
+
+	<div class="botcon2">
+		<button type="button" class="collapsible">CUSTOM RULE</button>
+		<div class="content"> 		
+		  <form action="/customflow" enctype="multipart/form-data" method="post" id="customflow">
+			<P>GENERAL</P>
+			<label for="dev">Device &nbsp;&nbsp;&nbsp;</label>
+				<select name="device" id="dev"> 
+				{% for item in onlinedeviceID %}
+				<option value={{item}}>{{item}}</option>
+				{% endfor %}
+			</select>
+				<br>
+			<label for="gid">Group ID</label>
+				<select name="group" id="gid">
+				 <!-- Fix this to have group IDs when added | or remove if no longer going to use-->
+				<option value=0>0</option>
+				<option value=1>1</option>
+				<option value=2>2</option>
+				<option value=3>3</option>
+			</select>
+			  <br>
+			  <label for="pri">Priority&nbsp;&nbsp;&nbsp;</label>
+			  <input type="number" name="priority" id="pri" placeholder="Default: 40000">
+			  <br>
+			  <P>INSTRUCTIONS</P>
+			  <P>Type</P>
+							<input type="radio" id="drop" name="instructiontype" value="OUTPUT">
+							<label for="drop">OUTPUT</label><br>
+
+							<input type="radio" id="SEN2" name="instructiontype" value="L2MODIFICATION">
+							<label for="SEN2">L2MODIFICATION</label><br>
+
+							<input type="radio" id="SEN3" name="instructiontype" value="L3MODIFICATION">
+							<label for="SEN3">L3MODIFICATION</label><br>
+
+							<div class="form-a" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+									  <tr>
+										  <td>Port</td>
+										  <td>&nbsp;</td>		
+									  </tr>	
+									  <tr>
+										  <td><input type="text" name ="instructionport" id="iport"  placeholder="CONTROLLER"></td>  
+										  <td>&nbsp;</td>		
+									  </tr>	  
+									</table>
+								</div>
+								<div class="form-b" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+									  <tr>
+										  <td>Subtype</td>
+										  <td>MAC Address</td>
+										  <td>&nbsp;</td>		
+									  </tr>	
+									  <tr>
+										  <td><select name="instructionsubtype" id="isubtype"><option value="ETH_SRC">ETH_SRC</option><option value="ETH_DST">ETH_DST</option></select></td>
+										  <td><input type="text" name="instructionmac" id="imac" placeholder="00:00:5e:00:53:af"></td>
+										  <td>&nbsp;</td>		
+									  </tr>	  
+									</table>
+								</div>
+								
+								<div class="form-c" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+									  <tr>
+										  <td>Subtype</td>
+										  <td>IPv4 Address</td>
+										  <td>&nbsp;</td>		
+									  </tr>	
+									  <tr>
+										  <td><select name="instructionsubtype" id="isubtype"><option value="IPV4_SRC">IPV4_SRC</option><option value="IPV4_DST">IPV4_DST</option></select></td>
+										  <td><input type="text" name ="instructionipv4" id="iipv4" placeholder="172.20.20.1/24"></td>
+										  <td>&nbsp;</td>		
+									  </tr>	  
+									</table>
+								</div>
+			  
+			  <br>
+			  <P>SELECTOR CRITERIA</P>
+			  <P>Type</P>
+							<input type="radio" id="SEN4" name="rad2" value="SEN4">
+							<label for="SEN4">ETH_TYPE</label><br>
+
+							<input type="radio" id="SEN5" name="rad2" value="SEN5">
+							<label for="SEN5">ETH_DST</label><br>
+
+							<input type="radio" id="SEN6" name="rad2" value="SEN6">
+							<label for="SEN6">ETH_SRC</label><br>
+
+							<input type="radio" id="SEN7" name="rad2" value="SEN7">
+							<label for="SEN7">IN_PORT</label><br>
+
+							<input type="radio" id="SEN8" name="rad2" value="SEN8">
+							<label for="SEN8">VLAN_VID</label><br>
+
+							<input type="radio" id="SEN9" name="rad2" value="SEN9">
+							<label for="SEN9">IPV4_DST</label><br>
+
+							<input type="radio" id="SEN10" name="rad2" value="SEN10">
+							<label for="SEN10">IPV4_SRC</label><br>
+
+							
+
+							<div class="form-d" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+									  <tr>
+										  <td>ethType</td>
+										  <td>&nbsp;</td>		
+									  </tr>	
+									  <tr>
+										  <td><input type="text" name ="selectorethtype" id="ethType"  placeholder="0x88cc"></td>  
+										  <td>&nbsp;</td>		
+									  </tr>	  
+									</table>
+								</div>
+								<div class="form-e" style="display: none">
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+										<tr>
+											<td>MAC Address</td>
+											<td>&nbsp;</td>		
+										</tr>	
+										<tr>
+											<td><input type="text" name="selectormac" id="smac" placeholder="00:00:5e:00:53:af"></td>
+											<td>&nbsp;</td>		
+										</tr>	  
+									  </table>
+								</div>
+								
+								<div class="form-f" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+										<tr>
+											<td>MAC Address</td>
+											<td>&nbsp;</td>		
+										</tr>	
+										<tr>
+											<td><input type="text" name="selectormac" id="smac" placeholder="00:00:5e:00:53:af"></td>
+											<td>&nbsp;</td>		
+										</tr>	  
+									  </table>
+								</div>
+			  
+
+								<div class="form-g" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+										<tr>
+											<td>Port</td>
+											<td>&nbsp;</td>		
+										</tr>	
+										<tr>
+											<td><input type="text" name ="selectorport" id="sport"  placeholder="#"></td>  
+											<td>&nbsp;</td>		
+										</tr>	  
+									  </table>
+								</div>
+
+								
+								<div class="form-h" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+										<tr>
+											<td>VLAN ID</td>
+											<td>&nbsp;</td>		
+										</tr>	
+										<tr>
+											<td><input type="number" name="selectorvlan" id="svlan" placeholder="#"></td>
+											<td>&nbsp;</td>		
+										</tr>	  
+									  </table>
+								</div>
+
+								
+								<div class="form-i" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+										<tr>
+											
+											<td>Destination IPv4 Address</td>
+											<td>&nbsp;</td>		
+										</tr>	
+										<tr>
+											<td><input type="text" name ="selectoripv4" id="sipv4" placeholder="172.20.20.1/24"></td>
+											<td>&nbsp;</td>		
+										</tr>	  
+									  </table>
+								</div>
+
+								
+								<div class="form-j" style="display: none">
+									
+									<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+										<tr>
+											
+											<td>Source IPv4 Address</td>
+											<td>&nbsp;</td>		
+										</tr>	
+										<tr>
+											<td><input type="text" name ="selectoripv4" id="sipv4" placeholder="172.20.20.1/24"></td>
+											<td>&nbsp;</td>		
+										</tr>	  
+									  </table>
+								</div>
+			 
+			  
+		  </select>
+
+		  <br><br><input type="submit" value="Submit" />
+		  </form>
+		  	<br>
+		</div>
+
+		<br><br>
+		<h2 style="color: #fff; text-align: center;">SECURITY POLICIES</h2>
+		
+		<div class="bottomcontainer2">
+			<div class="botcon22">
+				<button type="button" class="collapsible">POLICY SELECT</button>
+					<div class="content">
+						
+							<P>POLICY TYPES</P>
+							<input type="radio" id="drop" name="rad" value="SEN1">
+							<label for="drop">PACKET RATE LIMIT (DST IP)</label><br>
+
+							<input type="radio" id="SEN2" name="rad" value="SEN2">
+							<label for="SEN2">PACKET RATE LIMIT (SRC IP)</label><br>
+
+							<input type="radio" id="SEN3" name="rad" value="SEN3">
+							<label for="SEN3">BANDWIDTH RATE LIMIT (DST IP)</label><br>
+
+							<input type="radio" id="SEN4" name="rad" value="SEN4">
+							<label for="SEN3">BANDWIDTH RATE LIMIT (SRC IP)</label><br>
+
+							
+							<div class="form-a" style="display: none">
+							
+							<form action="/destmonitorpacket" enctype="multipart/form-data" method="post" id="srcdestmonitor">
+								<P>SELECTION CRITERIA</P>
+								<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+								  <tr>
+									  <td>Device</td>
+									  <td>Destination IPv4 Address</td>
+									  <td>RATE LIMIT</td>
+									  <td>App ID</td>
+									  <td>&nbsp;</td>		
+								  </tr>	
+								  <tr>
+									<td><select name="device" id="dev"> 
+										{% for item in onlinedeviceID %}
+										<option value={{item}}>{{item}}</option>
+										{% endfor %}
+									</select></td>
+									  <td><input type="text" name ="destipv4" id="destipv4"  placeholder="172.20.20.1"></td>
+									  <td><input type="number" name="ratelimit" id="ratelimit" placeholder="# in PKT/s"></td>
+									  <td><input type="number" name="customID" id="customID" placeholder="App Id #"></td>
+									  <td>&nbsp;</td>		
+								  </tr>	
+								  
+								  
+								</table>
+								<br><input type="submit" value="Submit" /><br>
+							</form>
+							<p><br></p>
+							</div>
+
+
+							<div class="form-b" style="display: none">
+								<form action="/srcmonitorpacket" enctype="multipart/form-data" method="post">
+								<P>SELECTION CRITERIA</P>
+								<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+								  <tr>
+									  <td>Device</td>
+									  <td>Source IPv4 Address</td>
+									  <td>RATE LIMIT</td>
+									  <td>App ID</td>
+									  <td>&nbsp;</td>		
+								  </tr>	
+								  <tr>
+										<td><select name="device" id="dev"> 
+											{% for item in onlinedeviceID %}
+											<option value={{item}}>{{item}}</option>
+											{% endfor %}
+										</select></td>
+									  <td><input type="text" name ="srcipv4" id="sipv4"  placeholder="172.20.20.1"></td>
+									  <td><input type="number" name="ratelimit" id="ratelimit" placeholder="# in PKT/s"></td>
+									  <td><input type="number" name="customID" id="customID" placeholder="App Id #"></td>
+									  <td>&nbsp;</td>		
+								  </tr>	
+								  
+								  
+								</table>
+								<br><input type="submit" value="Submit" /><br>
+							</form>
+							<p><br></p>
+						</div>
+							
+						<div class="form-c" style="display: none">
+							<form action="/destmonitorbytes" enctype="multipart/form-data" method="post">
+							<P>SELECTION CRITERIA</P>
+							<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+							  <tr>
+								<td>Device</td>
+								<td>Destination IPv4 Address</td>
+								<td>RATE LIMIT</td>
+								<td>App ID</td>
+								<td>&nbsp;</td>			
+							  </tr>	
+							  <tr>
+								<td><select name="device" id="dev"> 
+									{% for item in onlinedeviceID %}
+									<option value={{item}}>{{item}}</option>
+									{% endfor %}
+								</select></td>
+								  <td><input type="text" name ="destipv4" id="dipv4"  placeholder="172.20.20.1"></td>
+								  <td><input type="number" name="ratelimit" id="ratelimit" placeholder="# in Bytes/s"></td>
+								  <td><input type="number" name="customID" id="customID" placeholder="App Id #"></td>
+								  <td>&nbsp;</td>		
+							  </tr>	
+							  
+							  
+							</table>
+							<br><input type="submit" value="Submit" /><br>
+						</form>
+						<p><br></p>
+					</div>
+
+						<div class="form-x" style="display: none">
+							<form action="/srcmonitorbytes" enctype="multipart/form-data" method="post">
+							<P>SELECTION CRITERIA</P>
+							<table id="selectors" width="auto" cellpadding="4" cellspacing="4">
+							  <tr>
+								<td>Device</td>
+								<td>Source IPv4 Address</td>
+								<td>RATE LIMIT</td>
+								<td>App ID</td>
+								<td>&nbsp;</td>	
+							  </tr>	
+							  <tr>
+								<td><select name="device" id="dev"> 
+									{% for item in onlinedeviceID %}
+									<option value={{item}}>{{item}}</option>
+									{% endfor %}
+								</select></td>
+								  <td><input type="text" name ="srcipv4" id="sipv4"  placeholder="172.20.20.1"></td>
+								  <td><input type="number" name="ratelimit" id="ratelimit" placeholder="# in Bytes/s"></td>
+								  <td><input type="number" name="customID" id="customID" placeholder="App Id #"></td>
+								  <td>&nbsp;</td>		
+							  </tr>	
+							  
+							  
+							</table>
+							<br><input type="submit" value="Submit" /><br>
+						</form>
+						<p><br></p>
+					</div>
+							
+					</div>		
+
+			</div>
+		</div>
+	</div>	
+
+
+
+
   <script>
 
-	/* func to send alert, not sure if i like we will see*/
+	$(document).ready(function ()
+	{
+		var start = $('#instructions'),
+			newRow = '<tr><td><select name="instructiontype" id="itype"><option value="OUTPUT">OUTPUT</option><option value="GROUP">GROUP</option><option value="L2MODIFICATION">L2MODIFICATION</option><option value="L3MODIFICATION">L3MODIFICATION</option></select></td><td><select name="instructionsubtype" id="isubtype"><option disabled>&nbsp;&nbsp;&nbsp;--- L2MODIFICATION ---</option><option value="VLAN_PUSH">VLAN_PUSH</option><option value="VLAN_ID">VLAN_ID</option><option value="ETH_SRC">ETH_SRC</option><option value="ETH_DST">ETH_DST</option><option disabled>&nbsp;&nbsp;&nbsp;--- L3MODIFICATION ---</option><option value="IPV4_SRC">IPV4_SRC</option><option value="IPV4_DST">IPV4_DST</option><option value="IPV6_SRC">IPV6_SRC</option><option value="IPV6_DST">IPV6_DST</option></select></td><td><input type="text" name="instructionport" id="iport" placeholder="#"></td><td><input type="text" name="instructionmac" id="imac" placeholder="00:00:5e:00:53:af"></td> <!--- Could possibly make this a drop down of existing MACs--><td><input type="text" name ="instructionipv4" id="iipv4"  placeholder="172.20.20.1"></td><td><input type="number" name="instructionvlan" id="ivlan" placeholder="#"></td><td>&nbsp;</td></tr>';
+
+		$(document).on('click', '.addRow', function () { 
+			$(start).append(newRow);
+		});
+
+	});
+
+
+	$(document).ready(function() {
+  $('input[name=instructiontype]:radio').change(function(e) {
+    let value = e.target.value.trim()
+	console.log(1)
+    //$('[class^="form"]').css('display', 'none');
+    $('.form-a').hide()
+	$('.form-b').hide()
+	$('.form-c').hide()
+
+    switch (value) {
+      case 'OUTPUT':
+        $('.form-a').show()
+        break;
+      case 'L2MODIFICATION':
+        $('.form-b').show()
+        break;
+      case 'L3MODIFICATION':
+        $('.form-c').show()
+        break;
+      default:
+        break;
+    }
+  })
+})
+
+$(document).ready(function() {
+  $('input[name=rad]:radio').change(function(e) {
+    let value = e.target.value.trim()
+	console.log(1)
+    //$('[class^="form"]').css('display', 'none');
+    $('.form-a').hide()
+	$('.form-b').hide()
+	$('.form-c').hide()
+	$('.form-x').hide()
+
+    switch (value) {
+      case 'SEN1':
+        $('.form-a').show()
+        break;
+      case 'SEN2':
+        $('.form-b').show()
+        break;
+      case 'SEN3':
+        $('.form-c').show()
+        break;
+	  case 'SEN4':
+        $('.form-x').show()
+        break;
+      default:
+        break;
+    }
+  })
+})
+
+
+$(document).ready(function() {
+  $('input[name=rad2]:radio').change(function(o) {
+    let value = o.target.value.trim()
+	console.log(2)
+    //$('[class^="form"]').css('display', 'none');
+    $('.form-d').hide()
+	$('.form-e').hide()
+	$('.form-f').hide()
+	$('.form-g').hide()
+	$('.form-h').hide()
+	$('.form-i').hide()
+	$('.form-j').hide()
+
+    switch (value) {
+      case 'SEN4':
+        $('.form-d').show()
+        break;
+      case 'SEN5':
+        $('.form-e').show()
+        break;
+      case 'SEN6':
+        $('.form-f').show()
+        break;
+	  case 'SEN7':
+        $('.form-g').show()
+        break;
+      case 'SEN8':
+        $('.form-h').show()
+        break;
+      case 'SEN9':
+        $('.form-i').show()
+        break;
+	  case 'SEN10':
+        $('.form-j').show()
+        break;
+      default:
+        break;
+    }
+  })
+})
+
+	$(document).ready(function ()
+	{
+		var start = $('#selectors'),
+			newRow = '<tr><td><select name="selectortype" id="stype"><option value="ETH_TYPE">ETH_TYPE</option><option value="ETH_DST">ETH_DST</option><option value="ETH_SRC">ETH_SRC</option><option value="IN_PORT">IN_PORT</option><option value="VLAN_VID">VLAN_VID</option><option value="IPV4_SRC">IPV4_SRC</option><option value="IPV4_DST">IPV4_DST</option></select></td><td><input type="text" name="selectorethtype" id="sethtype" placeholder="0x88cc"></td><td><input type="text" name="selectorport" id="sport" placeholder="#"></td><td><input type="text" name="selectormac" id="smac" placeholder="00:00:5e:00:53:af"></td><td><input type="text" name ="selectoripv4" id="sipv4"  placeholder="172.20.20.1"></td><td><input type="number" name="selectorvlan" id="svlan" placeholder="#"></td></tr>'
+		$(document).on('click', '.saddRow', function () { 
+			$(start).append(newRow);
+		});
+
+	});
+
+
+/* func to send alert, not sure if i like we will see*/
 	function flowConfirm(){alert("Attempting To Apply Flow Rule");}
 
+
+
+ /*Script to open and close flow options buttons*/
 	var coll = document.getElementsByClassName("collapsible");
 	var i;
 	
+
 	for (i = 0; i < coll.length; i++) {
 	  coll[i].addEventListener("click", function() {
 		this.classList.toggle("active");
